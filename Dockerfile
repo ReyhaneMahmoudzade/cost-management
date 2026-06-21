@@ -41,10 +41,22 @@ RUN sed -ri -e 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-avail
 # ساخت لینک Storage
 RUN php artisan storage:link || true
 
-# دسترسی پوشه‌های لاراول
+# دسترسی پوشه‌های لاراول و فایل SQLite
 RUN chown -R www-data:www-data \
     storage \
-    bootstrap/cache
+    bootstrap/cache \
+    database
+
+RUN chmod -R 775 \
+    storage \
+    bootstrap/cache \
+    database
+
+# پاک کردن کش‌های لاراول
+RUN php artisan config:clear || true
+RUN php artisan cache:clear || true
+RUN php artisan route:clear || true
+RUN php artisan view:clear || true
 
 EXPOSE 80
 
