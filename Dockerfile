@@ -2,33 +2,49 @@ FROM php:8.3-apache
 
 WORKDIR /var/www/html
 
-# نصب ابزارهای لازم
+# نصب وابستگی‌های سیستم و PHP Extension ها
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
     curl \
     libzip-dev \
+    libsqlite3-dev \
     nodejs \
     npm \
-    && docker-php-ext-install pdo_sqlite zip
+    && docker-php-ext-install pdo_sqlite zip \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # نصب Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# کپی پروژه
+# کپی کردن پروژه
 COPY . .
 
 # نصب پکیج‌های PHP
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install \
+    --no-dev \
+    --optimize-autoloader \
+    --no-interaction
 
-# نصب و Build فرانت‌اند
-RUN npm install && npm run build
+# نصب و Build فایل‌های Vite
+RUN npm install
+RUN npm run build
 
-# ساخت storage link
+# فعال کردن Rewrite برای Laravel
+RUN a2enmod rewrite
+
+# تنظیم Document Root آپاچی روی public لاراول
+RUN sed -ri -e 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/*.conf \
+    && sed -ri -e 's!/var/www/!/var/www/!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+
+# ساخت لینک Storage
 RUN php artisan storage:link || true
 
-# دسترسی پوشه‌ها
-RUN chown -R www-data:www-data storage bootstrap/cache
+# دسترسی پوشه‌های لاراول
+RUN chown -R www-data:www-data \
+    storage \
+    bootstrap/cache
 
 EXPOSE 80
 
