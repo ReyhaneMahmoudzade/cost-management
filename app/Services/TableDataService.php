@@ -53,7 +53,7 @@ class TableDataService
         return ([
             ['label' => 'ردیف', 'type'  => 'index'],
             ['label' => 'نام', 'field' => 'name'],
-            ['label' => 'ضخامت', 'field' => 'width'],
+            ['label' => 'مشخصه فنی', 'field' => 'width'],
             ['label' => 'واحد', 'field' => 'unit'],
             ['label' => 'نرخ', 'field' => 'rate'],
             // ['label' => 'عملیات', 'type'  => 'actions'],
@@ -79,7 +79,7 @@ class TableDataService
     }
 
 
-    public static function processCcolumn()
+    public static function processColumn()
     {
         return ([
             ['label' => 'ردیف', 'type'  => 'index'],
@@ -111,7 +111,7 @@ class TableDataService
     }
 
 
-    public static function factorCcolumn()
+    public static function factorColumn()
     {
         return ([
             ['label' => 'ردیف', 'type'  => 'index'],

@@ -16,7 +16,7 @@ class ProcessController extends Controller
      */
     public function index()
     {
-        $columns = TableDataService::processCcolumn();
+        $columns = TableDataService::processColumn();
         $rows = Process::orderBy('id', 'desc')->get();
         $actions = TableDataService::processAction();
         $routes = TableDataService::processRoute();
@@ -45,6 +45,7 @@ class ProcessController extends Controller
         $process = Process::create([
             'name' => $data['name'],
             'standard_unit' => $data['standard_unit'],
+            'measure_unit' => $data['measure_unit'],
         ]);
 
         foreach ($data['factors'] as $factor) {

@@ -17,9 +17,11 @@
         class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 md:p-8 ">
         @csrf
 
-        <x-ui.form-info h2='اطلاعات پایه' h2_desc='توضیحات دلخواه در صورت نیاز' hidden='hidden'> 
+        <x-ui.form-info h2='اطلاعات پایه' h2_desc='واحد استاندارد مواردی مثل تعداد ضرب، زمان، متر در برش و... است.
+        واحد اندازه گیری مواردی مثل ثانیه، متر و... است.' hidden='hidden'> 
             <x-form.input name='name' label='نام فرآیند' />
             <x-form.input name='standard_unit' label='واحد استاندارد' />
+            <x-form.input name='measure_unit' label='واحد اندازه گیری' />
         </x-ui.form-info>
 
         <x-ui.form-info h2='عوامل موثر' add='add-factor' wrapper='factors-wrapper'
@@ -47,6 +49,15 @@
             <x-ui.button.submit />
         </div>
     </form>
+    @if ($errors->any())
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            <ul class="list-disc mr-5">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 @endsection
 
 @section('script')

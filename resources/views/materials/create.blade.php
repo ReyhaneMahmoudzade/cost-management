@@ -19,7 +19,7 @@
 
         <x-ui.form-info h2='اطلاعات پایه' h2_desc='توضیحات دلخواه در صورت نیاز' hidden='hidden'>
             <x-form.input name='name' label='نام ماده' />
-            <x-form.input name='width' label='ضخامت' />
+            <x-form.input name='width' label='مشخصه فنی' />
             <x-form.input name='unit' label='واحد' />
             <x-form.input name='rate' label='نرخ (ریال)' />
         </x-ui.form-info>

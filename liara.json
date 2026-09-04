@@ -2,7 +2,21 @@
   "app": "cost-management",
   "port": 3000,
   "build": {
-    "location": "iran"
+    "location": "germany"
   },
-  "disks": []
+  "disks": [
+    {
+      "name": "my-disk",
+      "mountTo": "path/to/folder"
+    }
+  ],
+  "laravel": {
+    "npmMirror": true,
+    "installDevDependencies": true,
+    "configCache": true,
+    "routeCache": true,
+    "buildAssets": true
+  }
 }
+
+

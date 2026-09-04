@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('processes', function (Blueprint $table) {
             $table->id();
             $table->string('name');//نام فرآیند
-            $table->string('standard_unit');//واحد اندازه گیری
+            $table->string('standard_unit');//واحد 
+            $table->string('measure_unit');//واحد اندازه گیری
             $table->timestamps();
         });
     }

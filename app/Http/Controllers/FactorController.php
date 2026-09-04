@@ -14,7 +14,7 @@ class FactorController extends Controller
      */
     public function index()
     {
-        $columns = TableDataService::factorCcolumn();
+        $columns = TableDataService::factorColumn();
         $rows = Factor::orderBy('id', 'desc')->get();
         $actions = TableDataService::factorAction();
         $routes = TableDataService::factorRoute();

@@ -23,7 +23,7 @@
             </div>
         </div>
 
-        <div class="bg-white rounded-2xl shadow-lg border border-gray-100">
+        <div class="">
             @yield('table')
         </div>
 

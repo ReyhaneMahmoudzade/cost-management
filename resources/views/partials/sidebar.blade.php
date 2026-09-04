@@ -3,8 +3,8 @@
     <!-- Logo -->
     <div class="h-20 flex items-center justify-center border-b border-slate-600">
         <h1 class="text-2xl font-bold">
-            {{-- پالایش نیرو --}}
-            شرکت تست
+            پالایش نیرو
+            
         </h1>
     </div>
 
@@ -16,13 +16,13 @@
             {{ request()->routeIs('home') ? 'bg-slate-700' : '' }} transition">
             صفحه اصلی
         </a> --}}
-        {{-- <x-ui.sidebar-item href="{{ route('home') }}"
+        <x-ui.sidebar-item href="{{ route('home') }}"
             active="{{ request()->routeIs('home') ? 'bg-slate-700' : '' }}" itemName="صفحه اصلی">
             <i class="fa-solid fa-home"></i>
             {{-- <i class="fa-solid fa-calculator"></i>
             <i class="fa-solid fa-sliders"></i>
             <i class="fa-solid fa-bullseye"></i> --}}
-        {{-- </x-ui.sidebar-item>  --}}
+        </x-ui.sidebar-item> 
 
         {{-- <a href="{{ route('materials.index') }}"
             class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-700

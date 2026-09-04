@@ -20,7 +20,7 @@
         <x-ui.form-info h2='اطلاعات پایه' h2_desc='ابتدا فرآیند را انتخاب و سپس نرخ مورد نظر خود را وارد کنید.'>
             {{-- <x-form.input name='y' label='نام فرآیند' /> --}}
             <x-form.combobox name='process_id' label='نام فرآیند' :options='$processes' />
-            <x-form.input name='rate_per_unit' label='نرخ واحد' />
+            <x-form.input name='rate_per_unit' label='نرخ واحد (ریال)' />
         </x-ui.form-info>
 
         <div class="flex items-center justify-end gap-3 pt-6 ">
