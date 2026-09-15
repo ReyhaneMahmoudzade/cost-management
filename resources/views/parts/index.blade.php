@@ -13,7 +13,8 @@
 @section('add_btn')
     <div class="flex items-center gap-2">
         <x-ui.button.add-btn href="{{ route('parts.create') }}" />
-        <a href="{{ route('parts.importForm') }}" class="px-3 py-2 rounded-xl border border-emerald-600 text-emerald-700 text-sm hover:bg-emerald-50 transition">
+        <a href="{{ route('parts.importForm') }}" 
+        class="px-3 py-2 rounded-xl border border-slate-800 text-slate-800 text-sm hover:bg-slate-100 transition">
             آپلود اکسل
         </a>
     </div>
