@@ -36,9 +36,4 @@ class Process extends Model
     {
         return $this->hasMany(ProcessFactor::class);
     }
-
-    // public function fc()
-    // {
-    //     return $this->belongsToMany(Factor::class, 'process_factors')->withPivot('weight');
-    // }
 }

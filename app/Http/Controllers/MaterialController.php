@@ -15,7 +15,7 @@ class MaterialController extends Controller
     public function index()
     {
         $columns = TableDataService::materialColumn();
-        $rows = Material::orderBy('id', 'desc')->get();
+        $rows = Material::with('activeRate')->orderBy('id', 'desc')->get();
         $actions = TableDataService::materialAction();
         $routes = TableDataService::materialRoute();
 
@@ -53,24 +53,32 @@ class MaterialController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Material $material)
     {
-        //
+        return view('materials.edit', compact('material'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreMaterialRequest $request, Material $material)
     {
-        //
+        $material->update($request->validated());
+
+        return redirect()
+            ->route('materials.index')
+            ->with('success', 'ماده با موفقیت ویرایش شد.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Material $material)
     {
-        //
+        $material->delete();
+
+        return redirect()
+            ->route('materials.index')
+            ->with('success', 'ماده با موفقیت حذف شد.');
     }
 }

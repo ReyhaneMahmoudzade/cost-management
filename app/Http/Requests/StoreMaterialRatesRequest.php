@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreMaterialRequest extends FormRequest
+class StoreMaterialRatesRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,8 @@ class StoreMaterialRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'width' => ['required', 'numeric'],
-            'unit' => ['required', 'string', 'max:50'],
+            'material_id' => ['required', 'exists:materials,id'],
+            'rate_per_unit' => ['required', 'numeric', 'min:0'],
         ];
     }
 }

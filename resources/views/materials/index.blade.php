@@ -14,6 +14,10 @@
     <x-ui.button.add-btn href="{{ route('materials.create') }}" />
 @endsection
 
+@section('btn2')
+    <x-ui.button.btn2 href="{{ route('material-rates.create') }}" />
+@endsection
+
 @section('table')
 
     @include('partials.table', [

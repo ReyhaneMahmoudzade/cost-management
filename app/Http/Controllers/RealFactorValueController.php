@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Part;
-use App\Models\Process;
 use App\Models\RealFactorValue;
 use App\Services\CostEstimationService;
 use App\Services\TableDataService;
@@ -16,24 +15,12 @@ class RealFactorValueController extends Controller
      */
     public function index()
     {
-        $parts = Part::with([
-            'partMaterials.material',
-            'partProcesses.process.processFactors.factor',
-            'partProcesses.process.processRates',
-
-
-        ])->get();
-        // $process = Process::with('processFactors.factor')->find(6);
-
-        // dd($process->processFactors);        
-
-        // dd($parts->toArray());
         $columns = TableDataService::realFactorColumn();
         $rows = Part::orderBy('id', 'desc')->get();
         $actions = TableDataService::realFactorAction();
         $routes = TableDataService::realFactorRoute();
 
-        return view('real-factor-values.index', compact('columns', 'rows', 'actions', 'routes', 'parts'));
+        return view('real-factor-values.index', compact('columns', 'rows', 'actions', 'routes'));
     }
 
     /**
@@ -41,11 +28,6 @@ class RealFactorValueController extends Controller
      */
     public function create()
     {
-        // $parts = Part::with([
-        //     'partMaterials.material',
-        //     'partProcesses.process.processFactors.factor',
-        // ])->get();
-
         $parts = Part::all();
         return view('real-factor-values.create', compact('parts'));
     }
@@ -55,7 +37,6 @@ class RealFactorValueController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         foreach ($request->coefficients as $partProcessId => $factors) {
 
             foreach ($factors as $processFactorId => $value) {
@@ -82,46 +63,18 @@ class RealFactorValueController extends Controller
      */
     public function show(string $id, CostEstimationService $service)
     {
-
         $part = Part::with([
-            'partMaterials.material',
+            'partMaterials.material.activeRate',
             'partProcesses.process.activeRate',
             'partProcesses.realFactorValues.processFactor.factor',
         ])
             ->findOrFail($id);
 
-
-
         $result = $service->calculate($part);
-
 
         return view(
             'real-factor-values.show',
-            compact('result','part')
+            compact('result', 'part')
         );
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

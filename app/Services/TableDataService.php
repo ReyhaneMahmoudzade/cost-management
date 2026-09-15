@@ -2,8 +2,6 @@
 
 namespace App\Services;
 
-// use App\Models\Product;
-
 class TableDataService
 {
     public static function partColumn()
@@ -18,35 +16,26 @@ class TableDataService
             ['label' => 'مساحت', 'field' => 'area'],
             ['label' => 'محیط', 'field' => 'perimeter'],
             ['label' => 'سایر اطلاعات', 'field' => 'description'],
-            // ['label' => 'عملیات', 'type'  => 'actions'],
-            // [
-            //     'label' => 'وضعیت',
-            //     'value' => function ($row) {
-            //         return $row->is_active ? 'فعال' : 'غیرفعال';
-            //     },
-            // ],
+            ['label' => 'عملیات', 'type'  => 'actions'],
         ]);
     }
+
     public static function partRoute()
     {
-        return([
-
+        return ([
+            'edit'   => 'parts.edit',
+            'delete' => 'parts.destroy',
         ]);
     }
+
     public static function partAction()
     {
-        return([
-
+        return ([
+            'edit',
+            'delete',
         ]);
     }
-// $actions = ['show', 'edit', 'delete'];
 
-        // نام روت‌ها
-        // $routes = [
-        //     'show'   => 'materials.show',
-        //     'edit'   => 'materials.edit',
-        //     'delete' => 'materials.destroy',
-        // ];
 
     public static function materialColumn()
     {
@@ -55,26 +44,30 @@ class TableDataService
             ['label' => 'نام', 'field' => 'name'],
             ['label' => 'مشخصه فنی', 'field' => 'width'],
             ['label' => 'واحد', 'field' => 'unit'],
-            ['label' => 'نرخ', 'field' => 'rate'],
-            // ['label' => 'عملیات', 'type'  => 'actions'],
-            // [
-            //     'label' => 'وضعیت',
-            //     'value' => function ($row) {
-            //         return $row->is_active ? 'فعال' : 'غیرفعال';
-            //     },
-            // ],
+            [
+                'label' => 'نرخ فعال',
+                'value' => function ($row) {
+                    $rate = $row->activeRate?->rate_per_unit;
+                    return $rate ? number_format($rate) . ' ریال' : '-';
+                },
+            ],
+            ['label' => 'عملیات', 'type'  => 'actions'],
         ]);
     }
+
     public static function materialRoute()
     {
-        return([
-
+        return ([
+            'edit'   => 'materials.edit',
+            'delete' => 'materials.destroy',
         ]);
     }
+
     public static function materialAction()
     {
-        return([
-            
+        return ([
+            'edit',
+            'delete',
         ]);
     }
 
@@ -85,28 +78,45 @@ class TableDataService
             ['label' => 'ردیف', 'type'  => 'index'],
             ['label' => 'نام', 'field' => 'name'],
             ['label' => 'واحد استاندارد', 'field' => 'standard_unit'],
-            // ['label' => 'تعداد عوامل موثر', 'field' => ''],
-            // ['label' => 'نرخ', 'field' => ''],
-            // ['label' => 'عملیات', 'type'  => 'actions'],
-            // [
-            //     'label' => 'وضعیت',
-            //     'value' => function ($row) {
-            //         return $row->is_active ? 'فعال' : 'غیرفعال';
-            //     },
-            // ],
+            [
+                'label' => 'تعداد عوامل موثر',
+                'html' => function ($row) {
+                    $count = $row->processFactors->count();
+                    $items = $row->processFactors->map(function ($pf) {
+                        return $pf->factor->name . ' (' . $pf->weight . ')';
+                    })->implode('، ');
+                    return '<span class="relative group">'
+                        . '<span class="p-1 rounded-full bg-orange-50 hover:bg-orange-100 cursor-help">' . $count . '</span>'
+                        . '<span class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block z-50 w-56">'
+                        . '<span class="bg-gray-800 text-white text-xs rounded-lg px-3 py-2 shadow-lg whitespace-nowrap">'
+                        . ($items ?: 'بدون عامل')  
+                        . '</span></span></span>';
+                },
+            ],
+            [
+                'label' => 'نرخ فعال',
+                'value' => function ($row) {
+                    $rate = $row->activeRate?->rate_per_unit;
+                    return $rate ? number_format($rate) . ' ریال' : '-';
+                },
+            ],
+            ['label' => 'عملیات', 'type'  => 'actions'],
         ]);
     }
+
     public static function processRoute()
     {
-        return([
-            // 'show' => '',
-
+        return ([
+            'edit'   => 'processes.edit',
+            'delete' => 'processes.destroy',
         ]);
     }
+
     public static function processAction()
     {
-        return([
-            
+        return ([
+            'edit',
+            'delete',
         ]);
     }
 
@@ -116,25 +126,23 @@ class TableDataService
         return ([
             ['label' => 'ردیف', 'type'  => 'index'],
             ['label' => 'نام', 'field' => 'name'],
-            // ['label' => 'عملیات', 'type'  => 'actions'],
-            // [
-            //     'label' => 'وضعیت',
-            //     'value' => function ($row) {
-            //         return $row->is_active ? 'فعال' : 'غیرفعال';
-            //     },
-            // ],
+            ['label' => 'عملیات', 'type'  => 'actions'],
         ]);
     }
+
     public static function factorRoute()
     {
-        return([
-
+        return ([
+            'edit'   => 'factors.edit',
+            'delete' => 'factors.destroy',
         ]);
     }
+
     public static function factorAction()
     {
-        return([
-            
+        return ([
+            'edit',
+            'delete',
         ]);
     }
 
@@ -146,26 +154,20 @@ class TableDataService
             ['label' => 'کد قطعه', 'field' => 'code'],
             ['label' => 'نام', 'field' => 'name'],
             ['label' => 'عملیات', 'type'  => 'actions'],
-            // [
-            //     'label' => 'وضعیت',
-            //     'value' => function ($row) {
-            //         return $row->is_active ? 'فعال' : 'غیرفعال';
-            //     },
-            // ],
         ]);
     }
+
     public static function realFactorRoute()
     {
-        return([
-            'show' => 'real-factor-values.show'
+        return ([
+            'show' => 'real-factor-values.show',
         ]);
     }
+
     public static function realFactorAction()
     {
-        return([
+        return ([
             'show',
         ]);
     }
-
-
 }

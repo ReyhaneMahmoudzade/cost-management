@@ -32,7 +32,6 @@ class ProcessRateController extends Controller
                 'is_active'     => true,
             ]);
         });
-        // dd()
 
         return redirect()
         ->route('processes.index')

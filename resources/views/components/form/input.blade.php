@@ -1,4 +1,4 @@
-@props(['name', 'label' => 'مقدار پیش فرض'])
+@props(['name', 'label' => 'مقدار پیش فرض', 'value' => null])
 
 
 {{-- <div class="relative dir-rtl">
@@ -21,8 +21,9 @@
 <div class="text-right">
     <label for="" class="block text-sm font-medium text-gray-700 mb-1">{{ $label }}</label>
     <input 
-        type="" 
-        name={{ $name }} 
+        type="text" 
+        name="{{ $name }}" 
+        value="{{ old($name, $value) }}"
         placeholder=""
         class="w-full px-4 py-3 bg-white border border-gray-300 rounded-xl shadow-sm outline-none transition-all duration-300
         focus:border-slate-600 focus:ring-4 focus:ring-slate-100 placeholder:text-gray-400" />

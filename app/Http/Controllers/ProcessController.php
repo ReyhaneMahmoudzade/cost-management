@@ -17,7 +17,7 @@ class ProcessController extends Controller
     public function index()
     {
         $columns = TableDataService::processColumn();
-        $rows = Process::orderBy('id', 'desc')->get();
+        $rows = Process::with(['processFactors.factor', 'activeRate'])->orderBy('id', 'desc')->get();
         $actions = TableDataService::processAction();
         $routes = TableDataService::processRoute();
 
@@ -38,10 +38,8 @@ class ProcessController extends Controller
      */
     public function store(StoreProcessRequest $request)
     {
-        // dd($request->all());
         $data = $request->validated();
 
-        // dd($data);
         $process = Process::create([
             'name' => $data['name'],
             'standard_unit' => $data['standard_unit'],
@@ -49,7 +47,6 @@ class ProcessController extends Controller
         ]);
 
         foreach ($data['factors'] as $factor) {
-
             ProcessFactor::create([
                 'process_id' => $process->id,
                 'factor_id' => $factor['factor_id'],
@@ -73,24 +70,51 @@ class ProcessController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Process $process)
     {
-        //
+        $factors = Factor::all();
+        $process->load('processFactors.factor');
+
+        return view('processes.edit', compact('process', 'factors'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreProcessRequest $request, Process $process)
     {
-        //
+        $data = $request->validated();
+
+        $process->update([
+            'name' => $data['name'],
+            'standard_unit' => $data['standard_unit'],
+            'measure_unit' => $data['measure_unit'],
+        ]);
+
+        $process->processFactors()->delete();
+
+        foreach ($data['factors'] as $factor) {
+            ProcessFactor::create([
+                'process_id' => $process->id,
+                'factor_id' => $factor['factor_id'],
+                'weight' => $factor['weight'],
+            ]);
+        }
+
+        return redirect()
+            ->route('processes.index')
+            ->with('success', 'فرآیند با موفقیت ویرایش شد.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Process $process)
     {
-        //
+        $process->delete();
+
+        return redirect()
+            ->route('processes.index')
+            ->with('success', 'فرآیند با موفقیت حذف شد.');
     }
 }

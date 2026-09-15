@@ -24,8 +24,8 @@ class StoreProcessRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'unique:processes,name'],
-            'standard_unit' => ['', ''],
-            'measure_unit' => ['', ''],
+            'standard_unit' => ['nullable', 'string', 'max:255'],
+            'measure_unit' => ['nullable', 'string', 'max:255'],
 
             'factors' => [
                 'required',

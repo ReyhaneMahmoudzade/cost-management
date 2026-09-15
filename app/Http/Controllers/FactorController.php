@@ -39,8 +39,8 @@ class FactorController extends Controller
         Factor::create($validated);
 
         return redirect()
-        ->route('factors.index')
-        ->with('success', 'عامل موثر با موفقیت ثبت شد.');
+            ->route('factors.index')
+            ->with('success', 'عامل موثر با موفقیت ثبت شد.');
     }
 
     /**
@@ -54,24 +54,32 @@ class FactorController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Factor $factor)
     {
-        //
+        return view('factors.edit', compact('factor'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreFactorRequest $request, Factor $factor)
     {
-        //
+        $factor->update($request->validated());
+
+        return redirect()
+            ->route('factors.index')
+            ->with('success', 'عامل موثر با موفقیت ویرایش شد.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Factor $factor)
     {
-        //
+        $factor->delete();
+
+        return redirect()
+            ->route('factors.index')
+            ->with('success', 'عامل موثر با موفقیت حذف شد.');
     }
 }

@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('code');//کد قطعه
             $table->string('group');//گروه کالا
             $table->string('type');//ماهیت
-            $table->string('weight');//وزن
-            $table->string('area');//مساحت
-            $table->string('perimeter');//محیط
+            $table->decimal('weight', 15, 2)->nullable();//وزن
+            $table->decimal('area', 15, 2)->nullable();//مساحت
+            $table->decimal('perimeter', 15, 2)->nullable();//محیط
             $table->text('description');//سایر 
             $table->timestamps();
         });

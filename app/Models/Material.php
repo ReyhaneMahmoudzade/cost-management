@@ -20,4 +20,15 @@ class Material extends Model
             'part_materials'
         )->withPivot('quantity');
     }
+
+    public function materialRates()
+    {
+        return $this->hasMany(MaterialRate::class);
+    }
+
+    public function activeRate()
+    {
+        return $this->hasOne(MaterialRate::class)
+            ->where('is_active', 1);
+    }
 }

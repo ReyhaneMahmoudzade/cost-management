@@ -1,26 +1,27 @@
 @extends('layouts.form-layout')
 
 @section('title')
-    تعریف ماده جدید
+    ویرایش ماده
 @endsection
 
 @section('header')
     @include('partials.header')
 @endsection
 
-@section('h1', 'تعریف ماده جدید')
+@section('h1', 'ویرایش ماده')
 
 @section('h1_desc', 'توضیحات دلخواه در صورت نیاز')
 
 @section('form')
-    <form action="{{ route('materials.store') }}" method="POST"
+    <form action="{{ route('materials.update', $material->id) }}" method="POST"
         class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 md:p-8 ">
         @csrf
+        @method('PUT')
 
         <x-ui.form-info h2='اطلاعات پایه' h2_desc='توضیحات دلخواه در صورت نیاز' hidden='hidden'>
-            <x-form.input name='name' label='نام ماده' />
-            <x-form.input name='width' label='مشخصه فنی' />
-            <x-form.input name='unit' label='واحد' />
+            <x-form.input name='name' label='نام ماده' :value="$material->name" />
+            <x-form.input name='width' label='مشخصه فنی' :value="$material->width" />
+            <x-form.input name='unit' label='واحد' :value="$material->unit" />
         </x-ui.form-info>
 
         <div class="flex items-center justify-end gap-3 pt-6 ">
@@ -29,15 +30,6 @@
             <x-ui.button.submit/>
         </div>
     </form>
-    @if ($errors->any())
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-            <ul class="list-disc mr-5">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
 @endsection
 
 @section('script')

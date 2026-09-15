@@ -1,35 +1,38 @@
 @extends('layouts.form-layout')
 
 @section('title')
-    تعریف فرآیند جدید
+    ویرایش فرآیند
 @endsection
 
 @section('header')
     @include('partials.header')
 @endsection
 
-@section('h1', 'تعریف فرآیند جدید')
+@section('h1', 'ویرایش فرآیند')
 
 @section('h1_desc', 'توضیحات دلخواه در صورت نیاز')
 
 @section('form')
-    <form action="{{ route('processes.store') }}" method="POST"
+    <form action="{{ route('processes.update', $process->id) }}" method="POST"
         class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 md:p-8 ">
         @csrf
+        @method('PUT')
 
         <x-ui.form-info h2='اطلاعات پایه' h2_desc='واحد استاندارد مواردی مثل تعداد ضرب، زمان، متر در برش و... است.
-        واحد اندازه گیری مواردی مثل ثانیه، متر و... است.' hidden='hidden'> 
-            <x-form.input name='name' label='نام فرآیند' />
-            <x-form.input name='standard_unit' label='واحد استاندارد' />
-            <x-form.input name='measure_unit' label='واحد اندازه گیری' />
+        واحد اندازه گیری مواردی مثل ثانیه، متر و... است.' hidden='hidden'>
+            <x-form.input name='name' label='نام فرآیند' :value="$process->name" />
+            <x-form.input name='standard_unit' label='واحد استاندارد' :value="$process->standard_unit" />
+            <x-form.input name='measure_unit' label='واحد اندازه گیری' :value="$process->measure_unit" />
         </x-ui.form-info>
 
         <x-ui.form-info h2='عوامل موثر' add='add-factor' wrapper='factors-wrapper'
             h2_desc='تمامی عوامل موثر در این فرآیند را انتخاب کرده و میزان اهمیت هر عامل را 
             به صورت عددی بین 0 و 1 مشخص کنید توجه داشته باشید که مجموع وزن ها باید برابر 1 شود.'
             >
-            <x-form.combobox name='factors[0][factor_id]' label='نام عامل' :options='$factors' />
-            <x-form.input name='factors[0][weight]' label='وزن / اهمیت' />
+            @foreach($process->processFactors as $index => $processFactor)
+                <x-form.combobox name="factors[{{ $index }}][factor_id]" label='نام عامل' :options='$factors' :selected="$processFactor->factor_id" />
+                <x-form.input name="factors[{{ $index }}][weight]" label='وزن / اهمیت' :value="$processFactor->weight" />
+            @endforeach
         </x-ui.form-info>
         <template class="lg:col-span-2" id="factor-template">
             <div class="js-dynamic-row">
@@ -67,7 +70,7 @@
                 wrapper: '#factors-wrapper',
                 addButton: '#add-factor',
                 template: '#factor-template',
-                startIndex: 1,
+                startIndex: {{ count($process->processFactors) }},
             });
         });
     </script>
