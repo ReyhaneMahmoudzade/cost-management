@@ -24,7 +24,7 @@ class StoreMaterialRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'width' => ['required', 'numeric'],
+            'width' => ['required'],
             'unit' => ['required', 'string', 'max:50'],
         ];
     }
