@@ -54,9 +54,9 @@ class PartController extends Controller
                 'code' => $data['code'],
                 'group' => $data['group'] ?? '',
                 'type' => $data['type'] ?? '',
-                'weight' => $data['weight'],
-                'area' => $data['area'],
-                'perimeter' => $data['perimeter'],
+                'weight' => $data['weight'] ?? 0,
+                'area' => $data['area'] ?? 0,
+                'perimeter' => $data['perimeter'] ?? 0,
                 'description' => $data['description'] ?? '',
             ]);
 
@@ -116,9 +116,9 @@ class PartController extends Controller
                 'code' => $data['code'],
                 'group' => $data['group'] ?? '',
                 'type' => $data['type'] ?? '',
-                'weight' => $data['weight'],
-                'area' => $data['area'],
-                'perimeter' => $data['perimeter'],
+                'weight' => $data['weight'] ?? 0,
+                'area' => $data['area'] ?? 0,
+                'perimeter' => $data['perimeter'] ?? 0,
                 'description' => $data['description'] ?? '',
             ]);
 

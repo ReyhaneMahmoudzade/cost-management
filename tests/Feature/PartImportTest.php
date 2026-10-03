@@ -53,6 +53,8 @@ class PartImportTest extends TestCase
         $this->assertDatabaseHas('parts', ['code' => 'FT-001', 'name' => 'قطعه یک']);
         $this->assertDatabaseHas('parts', ['code' => 'FT-002']);
         $this->assertEquals(1200, (float) Part::where('code', 'FT-001')->first()->weight);
+        // خانه‌های عددی خالی باید ۰ شوند تا روی دیتابیس NOT NULL هم خطا ندهد
+        $this->assertEquals(0, (float) Part::where('code', 'FT-002')->first()->weight);
 
         // آپلود مجدد → هر دو باید skip شوند
         $response2 = $this->post(route('parts.importStore'), [

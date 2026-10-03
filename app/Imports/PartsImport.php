@@ -105,12 +105,12 @@ class PartsImport implements ToCollection
             Part::create([
                 'name' => $name,
                 'code' => $code,
-                // ستون‌های group/type/description در دیتابیس NOT NULL هستند، پس رشته خالی ذخیره می‌کنیم
+                // ستون‌های group/type/description و weight/area/perimeter در بعضی دیتابیس‌ها NOT NULL هستند، پس مقدار پیش‌فرض می‌دهیم
                 'group' => $group !== '' ? $group : '',
                 'type' => $type !== '' ? $type : '',
-                'weight' => ($weight === '' || $weight === null) ? null : $weight,
-                'area' => ($area === '' || $area === null) ? null : $area,
-                'perimeter' => ($perimeter === '' || $perimeter === null) ? null : $perimeter,
+                'weight' => ($weight === '' || $weight === null) ? 0 : $weight,
+                'area' => ($area === '' || $area === null) ? 0 : $area,
+                'perimeter' => ($perimeter === '' || $perimeter === null) ? 0 : $perimeter,
                 'description' => $description !== '' ? $description : '',
             ]);
 

@@ -14,7 +14,7 @@
 
 @section('form')
     @if (session('success'))
-        <div class="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-xl mb-4">
+        <div class="bg-slate-50 border border-slate-200 text-slate-800 px-4 py-3 rounded-xl mb-4">
             {{ session('success') }}
         </div>
     @endif
